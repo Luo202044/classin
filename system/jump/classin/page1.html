@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跳转链接 | 棉尾舟导航站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background-color: #FFE6F2; color: #5A003A; line-height: 1.6; min-height: 100vh; }
+        
+        /* Header 样式 */
+        .header { 
+            background: linear-gradient(135deg, #FF66B2, #FF3385); 
+            padding: 1.2rem 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 4px 12px rgba(255, 102, 178, 0.2); 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo i { font-size: 2.2rem; color: white; }
+        .logo h1 { color: white; font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; }
+        .nav-links a { 
+            color: white; 
+            text-decoration: none; 
+            margin-left: 2rem; 
+            font-weight: 600; 
+            font-size: 1.1rem; 
+            transition: all 0.3s; 
+            padding: 8px 12px; 
+            border-radius: 20px; 
+        }
+        .nav-links a:hover { background-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* 页面标题 */
+        .page-title {
+            text-align: center;
+            color: #B3005E;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .page-subtitle {
+            text-align: center;
+            color: #FF3385;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* 搜索和统计区域 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(255, 102, 178, 0.1);
+        }
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #FFB6D9;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .search-box input:focus {
+            border-color: #FF66B2;
+            box-shadow: 0 0 0 3px rgba(255, 102, 178, 0.2);
+        }
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FF66B2;
+            font-size: 1.2rem;
+        }
+        .link-count {
+            font-weight: 600;
+            color: #B3005E;
+            background: #FFE6F2;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        /* 链接卡片样式 - 一行一个 */
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 3rem;
+        }
+        .link-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(255, 102, 178, 0.1);
+            transition: all 0.3s;
+            border-left: 6px solid #FF66B2;
+        }
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 102, 178, 0.2);
+        }
+        .link-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FFB6D9, #FF66B2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+        .link-icon i {
+            font-size: 1.8rem;
+            color: white;
+        }
+        .link-content {
+            flex: 1;
+        }
+        .link-content h3 {
+            color: #B3005E;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+        .link-content p {
+            color: #5A003A;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        .link-arrow {
+            color: #FF66B2;
+            font-size: 1.5rem;
+            margin-left: 1rem;
+            transition: transform 0.3s;
+        }
+        .link-card:hover .link-arrow {
+            transform: translateX(5px);
+        }
+        .link-card a {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* 分类标签 */
+        .link-tag {
+            display: inline-block;
+            background: #FFE6F2;
+            color: #FF3385;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        /* 页脚样式 */
+        .footer {
+            background: linear-gradient(135deg, #FF66B2, #FF3385);
+            color: white;
+            padding: 2.5rem 5%;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        /* 返回按钮 */
+        .back-home {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .back-home a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: #FF3385;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid #FFB6D9;
+        }
+        .back-home a:hover {
+            background: #FFB6D9;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* 无结果提示 */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 15px;
+            color: #5A003A;
+            font-size: 1.2rem;
+            display: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 1rem; }
+            .nav-links a { margin: 0 0.5rem; font-size: 1rem; }
+            .controls { flex-direction: column; gap: 1rem; }
+            .search-box { max-width: 100%; }
+            .link-card { padding: 1.2rem; }
+            .link-icon { width: 50px; height: 50px; margin-right: 1rem; }
+            .link-icon i { font-size: 1.5rem; }
+            .link-content h3 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-compass"></i>
+            <h1>棉尾舟导航站</h1>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+            <a href="about.html"><i class="fas fa-info-circle"></i> 关于</a>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <h1 class="page-title">跳转链接</h1>
+        <p class="page-subtitle">常用资源链接，点击卡片即可跳转</p>
+        
+        <!-- 搜索和统计区域 -->
+        <div class="controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索链接...">
+            </div>
+            <div class="link-count">
+                共 <span id="totalLinks">15</span> 个链接
+            </div>
+        </div>
+        
+        <!-- 链接列表 -->
+        <div class="link-list" id="linkList">
+            <!-- 链接卡片1 -->
+            <div class="link-card" data-category="下载" data-title="棉尾舟下载">
+                <a href="../web/page1.html" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-cloud-download-alt"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>棉尾舟资源下载</h3>
+                        <p>棉尾舟服务器的资源下载页面，包含手机客户端等</p>
+                        <span class="link-tag">下载</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片2 -->
+            <div class="link-card" data-category="下载" data-title="境之彼端下载">
+                <a href="../镜之彼端/page1.html" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>境之彼端资源下载</h3>
+                        <p>境之彼端服务器的资源下载页面，包含整合包和模组</p>
+                        <span class="link-tag">下载</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片3 -->
+            <div class="link-card" data-category="社交" data-title="QQ联系">
+                <a href="https://wpa.qq.com/msgrd?v=3&uin=3687448041&site=qq&menu=yes" target="_blank">
+                    <div class="link-icon">
+                        <i class="fab fa-qq"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>QQ联系站长</h3>
+                        <p>点击此处通过QQ联系站长，获取帮助或反馈问题</p>
+                        <span class="link-tag">社交</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片4 -->
+            <div class="link-card" data-category="服务商" data-title="雨云">
+                <a href="https://www.rainyun.com/luoqing_" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>雨云 - 服务提供商</h3>
+                        <p>本站下载服务由雨云提供计算服务</p>
+                        <span class="link-tag">服务商</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片5 -->
+            <div class="link-card" data-category="开发" data-title="DeepSeek">
+                <a href="https://chat.deepseek.com" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>DeepSeek - AI助手</h3>
+                        <p>本站网页由DeepSeek AI协助开发</p>
+                        <span class="link-tag">开发</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片6 -->
+            <div class="link-card" data-category="工具" data-title="GitHub">
+                <a href="https://github.com" target="_blank">
+                    <div class="link-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>GitHub</h3>
+                        <p>全球最大的代码托管平台，开源项目聚集地</p>
+                        <span class="link-tag">工具</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片7 -->
+            <div class="link-card" data-category="工具" data-title="MDN Web文档">
+                <a href="https://developer.mozilla.org/zh-CN" target="_blank">
+                    <div class="link-icon">
+                        <i class="fab fa-mdn"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>MDN Web文档</h3>
+                        <p>Web开发技术文档，学习HTML、CSS、JavaScript的权威资源</p>
+                        <span class="link-tag">工具</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片8 -->
+            <div class="link-card" data-category="资源" data-title="Font Awesome">
+                <a href="https://fontawesome.com" target="_blank">
+                    <div class="link-icon">
+                        <i class="fab fa-font-awesome"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>Font Awesome图标库</h3>
+                        <p>本站使用的图标库，提供丰富的矢量图标</p>
+                        <span class="link-tag">资源</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片9 -->
+            <div class="link-card" data-category="学习" data-title="菜鸟教程">
+                <a href="https://www.runoob.com" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>菜鸟教程</h3>
+                        <p>编程学习网站，提供多种编程语言教程</p>
+                        <span class="link-tag">学习</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 链接卡片10 -->
+            <div class="link-card" data-category="工具" data-title="Can I use">
+                <a href="https://caniuse.com" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="link-content">
+                        <h3>Can I use</h3>
+                        <p>检查Web技术在浏览器中的兼容性</p>
+                        <span class="link-tag">工具</span>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- 无结果提示 -->
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; color: #FFB6D9;"></i>
+            <h3>未找到匹配的链接</h3>
+            <p>请尝试其他搜索关键词</p>
+        </div>
+        
+        <!-- 返回首页按钮 -->
+        <div class="back-home">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> 返回首页</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p>© 2025 - 2026 棉尾舟导航站 | 跳转链接页面</p>
+        <p>当前页面共 <span id="currentCount">15</span> 个链接</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const linkCards = document.querySelectorAll('.link-card');
+            const noResults = document.getElementById('noResults');
+            const totalLinksSpan = document.getElementById('totalLinks');
+            const currentCountSpan = document.getElementById('currentCount');
+            
+            // 初始化链接计数
+            const totalLinks = linkCards.length;
+            totalLinksSpan.textContent = totalLinks;
+            currentCountSpan.textContent = totalLinks;
+            
+            // 搜索功能
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                let visibleCount = 0;
+                
+                linkCards.forEach(card => {
+                    const title = card.getAttribute('data-title').toLowerCase();
+                    const category = card.getAttribute('data-category').toLowerCase();
+                    const content = card.querySelector('.link-content').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || 
+                        category.includes(searchTerm) || 
+                        content.includes(searchTerm)) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // 更新当前可见链接数
+                currentCountSpan.textContent = visibleCount;
+                
+                // 显示/隐藏无结果提示
+                if (visibleCount === 0 && searchTerm !== '') {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            });
+            
+            // 为所有内部链接添加平滑滚动效果
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 添加卡片点击动画
+            linkCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // 如果点击的是链接本身，不添加额外动画
+                    if (e.target.tagName === 'A' || e.target.closest('a')) {
+                        return;
+                    }
+                    
+                    // 否则触发链接点击
+                    const link = this.querySelector('a');
+                    if (link) {
+                        link.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
