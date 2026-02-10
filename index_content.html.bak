@@ -6,7 +6,7 @@
     <title>四季亭导航站 | 首页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 以下是原有页面样式，保持不变 */
+        /* 以下是原页面样式，保持不变 */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
         body { background-color: #FFE6F2; color: #5A003A; line-height: 1.6; min-height: 100vh; }
         .header { background: linear-gradient(135deg, #FF66B2, #FF3385); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(255, 102, 178, 0.2); position: sticky; top: 0; z-index: 100; }
@@ -151,14 +151,6 @@
             .download-jump-card h2 { font-size: 1.7rem; }
             .announcement-card { padding: 1.5rem; }
         }
-        
-        /* iframe容器样式 */
-        #content-frame {
-            width: 100%;
-            min-height: calc(100vh - 180px);
-            border: none;
-            overflow: hidden;
-        }
     </style>
 </head>
 <body>
@@ -168,27 +160,106 @@
             <h1>四季亭导航站</h1>
         </div>
         <nav class="nav-links">
-            <a href="#" onclick="loadPage('index.html')"><i class="fas fa-home"></i> 首页</a>
-            <a href="#" onclick="loadPage('system/web/about.html')"><i class="fas fa-info-circle"></i> 关于</a>
-            <a href="#" onclick="loadPage('system/web/center.html')"><i class="fas fa-th-large"></i> 资源分类</a>
+            <a href="index.html"><i class="fas fa-home"></i> 首页</a>
+            <a href="system/web/about.html"><i class="fas fa-info-circle"></i> 关于</a>
         </nav>
     </header>
     
     <main class="container">
-        <iframe id="content-frame" src="index_content.html" title="内容区域"></iframe>
+        <!-- 下载跳转卡片 -->
+        <div class="download-jump-card">
+            <h2><i class="fas fa-external-link-alt"></i> 功能跳转</h2>
+            <p>点击下方按钮跳转到资源分类中心</p>
+            <a href="system/web/center.html" target="_top">点我跳转 <i class="fas fa-arrow-right"></i></a>
+        </div>
+        
+        <!-- Hero介绍部分 -->
+        <section class="hero" id="home">
+            <h2>欢迎来到四季亭导航站</h2>
+            <p>面向ClassIn用户的公共导航平台</p>
+        </section>
+        
+        <!-- 功能特性介绍 -->
+        <h2 class="section-title" id="features">功能特性</h2>
+        <div class="announcement-cards">
+            <!-- 功能特性卡片1 -->
+            <div class="announcement-card">
+                <h3><i class="fas fa-compass"></i> 导航分类系统</h3>
+                <p>提供ClassIn群组分类导航，用户可以快速访问不同的ClassIn群组和相关资源。</p>
+                <p>通过资源分类中心页面，可以按需查找所需内容。</p>
+            </div>
+
+            <!-- 功能特性卡片2 -->
+            <div class="announcement-card">
+                <h3><i class="fas fa-music"></i> 音乐播放器</h3>
+                <p>集成可折叠音乐播放器，固定在浏览器右侧边缘，支持播放、暂停、切歌等功能。</p>
+                <p>支持键盘快捷键操作：空格键播放/暂停，Ctrl+左右箭头切换歌曲。</p>
+            </div>
+            
+            <!-- 功能特性卡片3 -->
+            <div class="announcement-card">
+                <h3><i class="fas fa-mobile-alt"></i> 响应式设计</h3>
+                <p>采用响应式设计，适配不同屏幕尺寸，包括移动设备和桌面端。</p>
+                <p>确保在各种设备上都有良好的用户体验。</p>
+            </div>
+
+            <!-- 功能特性卡片4 -->
+            <div class="announcement-card">
+                <h3><i class="fas fa-plug"></i> 模块化架构</h3>
+                <p>项目结构清晰，模块化设计便于维护和扩展新功能。</p>
+                <p>预留了扩展接口，方便后续功能添加。</p>
+            </div>
+        </div>
+        
+        <!-- 项目介绍 -->
+        <h2 class="section-title" id="about">项目概述</h2>
+        <div class="announcement-cards">
+            <div class="announcement-card">
+                <h3><i class="fas fa-info-circle"></i> 关于四季亭导航站</h3>
+                <p>四季亭导航站是一个面向ClassIn用户的公共导航平台，主要提供ClassIn群聊链接的分类导航服务。</p>
+                <p>同时集成了音乐播放器、网页跳转等功能，为用户提供便捷的访问体验。</p>
+            </div>
+        </div>
+        
+        <!-- 使用说明 -->
+        <h2 class="section-title" id="instructions">使用说明</h2>
+        <div class="announcement-cards">
+            <div class="announcement-card">
+                <h3><i class="fas fa-book"></i> 如何使用</h3>
+                <p>1. 访问主页查看导航站介绍和功能入口</p>
+                <p>2. 点击"点我跳转"按钮进入资源分类中心</p>
+                <p>3. 在资源分类中心选择ClassIn或其他分类</p>
+                <p>4. 在分类页面查看具体群组信息并点击跳转</p>
+                <p>5. 使用固定在右侧的音乐播放器享受音乐</p>
+            </div>
+        </div>
+        
+        <!-- 公告部分 -->
+        <h2 class="section-title" id="announcements">公告</h2>
+        <div class="announcement-cards">
+            <!-- 公告卡片1 -->
+            <div class="announcement-card">
+                <h3><i class="fas fa-bullhorn"></i> 广告位招商</h3>
+                <p>添加收录网站链接(仅合法网站），宣传您的群 (以cl)</p>
+                <p>发送邮件到邮箱 luoqing5203789@outlook.com</p>
+            </div>
+            
+            <!-- 公告卡片0 - 粉色按钮卡片 -->
+            <div class="announcement-card pink-button-card">
+                <h3><i class="fas fa-newspaper"></i> 友链</h3>
+                <p>本站下载服务由雨云提供计算服务</p>
+                <a href="https://www.rainyun.com/luoqing_" target="_blank" class="pink-button">
+                    访问雨云 <i class="fas fa-external-link-alt"></i>
+                </a>
+            </div>
+        </div>
     </main>
     
     <footer class="footer">
-        <p>© 2026 四季亭 </p>
+        <p>© 2026 四季亭</p>
     </footer>
     
     <script>
-        // 页面加载函数
-        function loadPage(pageUrl) {
-            document.getElementById('content-frame').src = pageUrl;
-            return false;
-        }
-        
         document.addEventListener('DOMContentLoaded', function() {
             // 为所有内部链接添加平滑滚动效果
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
