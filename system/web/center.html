@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -35,7 +35,7 @@
             .hero h2 { font-size: 2rem; }
             .categories { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
         }
-        
+
         /* ========== 音乐播放器控件内嵌CSS ========== */
         #music-player-container {
             position: fixed;
@@ -206,8 +206,8 @@
             <h1>四季亭导航站</h1>
         </div>
         <nav class="nav-links">
-            <a href="https://classin.luoqing5203789.dpdns.org/index.html"><i class="fas fa-home"></i> 首页</a>
-            <a href="https://classin.luoqing5203789.dpdns.org/about.html"><i class="fas fa-info-circle"></i> 关于</a>
+            <a href="../index.html"><i class="fas fa-home"></i> 首页</a>
+            <a href="../system/web/about.html"><i class="fas fa-info-circle"></i> 关于</a>
         </nav>
     </header>
     <main class="container">
@@ -243,9 +243,7 @@
             </div>
         </div>
     </main>
-    <footer class="footer" id="about">
-        <p>© 2026 四季亭 </p>
-    </footer>
+    <footer class="footer" id="about"></footer>
     
     <!-- 音乐播放器控件 - 固定定位在浏览器右侧边缘 -->
     <div id="music-player-container" class="collapsed">
@@ -290,36 +288,6 @@
             <div class="player-status" id="player-status">准备就绪</div>
         </div>
     </div>
-
-    <!-- 原有脚本修复 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 为所有内部链接添加平滑滚动效果
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        e.preventDefault();
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // 禁用链接点击处理
-            document.querySelectorAll('.disabled-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('此功能尚未启用，敬请期待后续更新。');
-                });
-            });
-        });
-    </script>
     
     <!-- 内嵌音乐播放器控制JS -->
     <script>
@@ -699,27 +667,36 @@
                 });
                 
                 console.log("✅ 所有事件监听器绑定完成");
-            }
 
-            // 初始化播放器
-            initPlayer();
-            
-            // 全局导出
-            window.musicPlayer = {
-                play: playSong,
-                pause: pauseSong,
-                togglePlayPause: togglePlayPause,
-                prevSong: prevSong,
-                nextSong: nextSong,
-                loadSong: loadSong,
-                togglePlayer: togglePlayer,
-                getState: () => ({ ...playerState }),
-                getCurrentSong: () => playerState.playlist[playerState.currentSongIndex] || null,
-                getPlaylist: () => [...playerState.playlist],
-                fetchPlaylistFromGitHub: fetchPlaylistFromGitHub,
-                musicConfig: musicConfig
-            };
+                // 初始化播放器
+                initPlayer();
+                
+                // 全局导出
+                window.musicPlayer = {
+                    play: playSong,
+                    pause: pauseSong,
+                    togglePlayPause: togglePlayPause,
+                    prevSong: prevSong,
+                    nextSong: nextSong,
+                    loadSong: loadSong,
+                    togglePlayer: togglePlayer,
+                    getState: () => ({ ...playerState }),
+                    getCurrentSong: () => playerState.playlist[playerState.currentSongIndex] || null,
+                    getPlaylist: () => [...playerState.playlist],
+                    fetchPlaylistFromGitHub: fetchPlaylistFromGitHub,
+                    musicConfig: musicConfig
+                };
+            });
         });
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
