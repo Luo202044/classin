@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
-        body { background-color: #FFE6F2; color: #5A003A; line-height: 1.6; }
+        body { background-color: #FFE6F2; color: #5A003A; line-height: 1.6; min-height: 100vh; }
         .header { background: linear-gradient(135deg, #FF66B2, #FF3385); padding: 1.2rem 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 12px rgba(255, 102, 178, 0.2); position: sticky; top: 0; z-index: 100; }
         .logo { display: flex; align-items: center; gap: 12px; }
         .logo i { font-size: 2.2rem; color: white; }
@@ -102,25 +102,6 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     alert('该成员信息正在更新中，敬请期待！');
-                });
-            });
-            
-            // 为所有内部链接添加动态加载功能
-            document.querySelectorAll('a[href$=".html"], a:not([href*="http"])').forEach(link => {
-                // 排除外部链接
-                if (link.href.includes('http') && !link.href.includes(window.location.hostname)) {
-                    return;
-                }
-                
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // 调用父窗口的loadPage函数
-                    if (window.parent && window.parent !== window) {
-                        window.parent.loadPage(this.getAttribute('href'));
-                    } else {
-                        // 如果不是在iframe中，则正常跳转
-                        window.location.href = this.getAttribute('href');
-                    }
                 });
             });
         });
