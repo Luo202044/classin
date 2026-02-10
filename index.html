@@ -833,6 +833,129 @@
         });
     </script>
     
+    <!-- 动态页面加载脚本 -->
+    <script>
+        // 用于存储当前加载的页面内容
+        let currentPageContent = null;
+        
+        // 页面加载函数
+        function loadPage(url) {
+            // 显示加载状态
+            document.getElementById('player-status').textContent = '正在加载页面...';
+            
+            // 使用fetch加载页面内容
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    // 解析HTML
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    
+                    // 提取主要内容（除了音乐播放器部分）
+                    const newContent = doc.querySelector('.container');
+                    const newMain = doc.querySelector('main');
+                    
+                    if (newContent || newMain) {
+                        // 替换当前页面内容
+                        const currentMain = document.querySelector('main');
+                        if (newContent) {
+                            currentMain.innerHTML = '';
+                            currentMain.appendChild(newContent);
+                        } else if (newMain) {
+                            document.querySelector('.container').innerHTML = newMain.innerHTML;
+                        }
+                        
+                        // 更新标题
+                        document.title = doc.title;
+                        
+                        // 更新导航链接，使其使用动态加载
+                        updateNavigationLinks();
+                        
+                        // 重新绑定页面特定的事件监听器
+                        initializePageScripts();
+                        
+                        // 更新状态
+                        document.getElementById('player-status').textContent = '页面加载完成';
+                    } else {
+                        throw new Error('无法找到页面主要内容');
+                    }
+                })
+                .catch(error => {
+                    console.error('页面加载失败:', error);
+                    document.getElementById('player-status').textContent = '页面加载失败';
+                });
+                
+            return false; // 阻止默认链接行为
+        }
+        
+        // 更新导航链接，使其使用动态加载
+        function updateNavigationLinks() {
+            document.querySelectorAll('nav a').forEach(link => {
+                // 不修改外部链接
+                if (link.href.includes('http') && !link.href.includes(window.location.hostname)) {
+                    return;
+                }
+                
+                // 只更新内部页面链接
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    
+                    // 确保路径正确
+                    if (href && !href.startsWith('http')) {
+                        loadPage(href);
+                    }
+                }, { once: true }); // 使用once确保不会重复添加监听器
+            });
+            
+            // 更新页面内的跳转链接
+            document.querySelectorAll('a[href^="system/"], a[href^="index.html"], a[href^="404.html"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    loadPage(href);
+                }, { once: true });
+            });
+        }
+        
+        // 初始化页面特定的脚本
+        function initializePageScripts() {
+            // 为新加载的页面添加平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 如果新页面有特定脚本，可以在这里初始化
+        }
+        
+        // 页面加载完成后更新导航链接
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为"点我跳转"按钮添加动态加载功能
+            const jumpButton = document.querySelector('.download-jump-card a');
+            if (jumpButton) {
+                jumpButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    loadPage('system/web/center.html');
+                });
+            }
+            
+            // 初始时更新导航链接
+            updateNavigationLinks();
+        });
+    </script>
+    
     <!-- 原有的脚本 -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
