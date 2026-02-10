@@ -324,7 +324,7 @@
         </div>
         <nav class="nav-links">
             <a href="index.html"><i class="fas fa-home"></i> 首页</a>
-            <a href="system/web/about.html"><i class="fas fa-info-circle"></i> 关于</a>
+            <a href="../system/web/about.html"><i class="fas fa-info-circle"></i> 关于</a>
         </nav>
     </header>
     
@@ -484,7 +484,7 @@
                 // 常见分隔符替换为空格
                 name = name.replace(/[_-]/g, ' ');
                 
-                // 移除数字前缀（如 "01 - " 或 "01."）
+                // 移除数字前缀（如 "01 - " 或 "01.")
                 name = name.replace(/^\d+[\s._-]*/, "");
                 
                 // 单词首字母大写
@@ -810,58 +810,33 @@
                 });
                 
                 console.log("✅ 所有事件监听器绑定完成");
-            }
 
-            // 初始化播放器
-            initPlayer();
-            
-            // 全局导出
-            window.musicPlayer = {
-                play: playSong,
-                pause: pauseSong,
-                togglePlayPause: togglePlayPause,
-                prevSong: prevSong,
-                nextSong: nextSong,
-                loadSong: loadSong,
-                togglePlayer: togglePlayer,
-                getState: () => ({ ...playerState }),
-                getCurrentSong: () => playerState.playlist[playerState.currentSongIndex] || null,
-                getPlaylist: () => [...playerState.playlist],
-                fetchPlaylistFromGitHub: fetchPlaylistFromGitHub,
-                musicConfig: musicConfig
-            };
-        });
-    </script>
-    
-    <!-- 原有的脚本 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 为所有内部链接添加平滑滚动效果
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        e.preventDefault();
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
+                // 初始化播放器
+                initPlayer();
+                
+                // 全局导出
+                window.musicPlayer = {
+                    play: playSong,
+                    pause: pauseSong,
+                    togglePlayPause: togglePlayPause,
+                    prevSong: prevSong,
+                    nextSong: nextSong,
+                    loadSong: loadSong,
+                    togglePlayer: togglePlayer,
+                    getState: () => ({ ...playerState }),
+                    getCurrentSong: () => playerState.playlist[playerState.currentSongIndex] || null,
+                    getPlaylist: () => [...playerState.playlist],
+                    fetchPlaylistFromGitHub: fetchPlaylistFromGitHub,
+                    musicConfig: musicConfig
+                };
             });
-            
-            // 下载跳转链接提示
-            const downloadLink = document.querySelector('.download-jump-card a');
-            if (downloadLink && downloadLink.getAttribute('href') === 'https://待设置') {
-                downloadLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('下载链接尚未设置，请联系管理员进行配置。');
-                });
-            }
         });
+        
+        // 页面加载函数
+        function loadPage(pageUrl) {
+            document.getElementById('content-frame').src = pageUrl;
+            return false;
+        }
     </script>
 </body>
 </html>
