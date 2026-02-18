@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>四季亭导航站 | 首页</title>
+    <title>Cottie | 首页</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* 以下是原页面样式，保持不变 */
@@ -157,7 +157,7 @@
     <header class="header">
         <div class="logo">
             <i class="fas fa-compass"></i>
-            <h1>四季亭导航站</h1>
+            <h1>Cottie</h1>
         </div>
         <nav class="nav-links">
             <a href="index.html"><i class="fas fa-home"></i> 首页</a>
@@ -175,7 +175,7 @@
         
         <!-- Hero介绍部分 -->
         <section class="hero" id="home">
-            <h2>欢迎来到四季亭导航站</h2>
+            <h2>欢迎来到 Cottie</h2>
             <p>面向ClassIn用户的公共导航平台</p>
         </section>
         
@@ -215,8 +215,8 @@
         <h2 class="section-title" id="about">项目概述</h2>
         <div class="announcement-cards">
             <div class="announcement-card">
-                <h3><i class="fas fa-info-circle"></i> 关于四季亭导航站</h3>
-                <p>四季亭导航站是一个面向ClassIn用户的公共导航平台，主要提供ClassIn群聊链接的分类导航服务。</p>
+                <h3><i class="fas fa-info-circle"></i> 关于 Cottie</h3>
+                <p>Cottie是一个面向ClassIn用户的公共导航平台，主要提供ClassIn群聊链接的分类导航服务。</p>
                 <p>同时集成了音乐播放器、网页跳转等功能，为用户提供便捷的访问体验。</p>
             </div>
         </div>
@@ -256,7 +256,7 @@
     </main>
     
     <footer class="footer">
-        <p>© 2026 四季亭</p>
+        <p>© 2025-2026 四季亭</p>
     </footer>
     
     <script>
